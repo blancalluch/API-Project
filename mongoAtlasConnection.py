@@ -18,8 +18,7 @@ def connectCollection(database, collection):
     coll = db[collection]
     return db, coll
 
-db, coll = connectCollection('chat_conversations','chat_conversations')
-
 with open('./input/chats.json') as f:
     chats_json = json.load(f)
-coll.insert_many(chats_json)
+#coll.remove({})
+#coll.insert_many(chats_json)

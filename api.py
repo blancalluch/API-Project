@@ -14,6 +14,7 @@ def usernames():
 
 @get("/chats")
 def chats():
+    print(f"Chat")
     return dumps(coll.find({},{"idChat":1}))
 
 @get("/chat/<chat_id>")
@@ -27,13 +28,21 @@ def existing(element):
         c.append((data[d][element]))
     return set(c)
 
-@post("/username/<name>")
-def creatName(name):
-    print(f"Información de: {name}")
-    n=existing(name)
-    if dumps(coll.find({"userName":name}))==[]:
-        coll.insert_one()
-    return dumps(coll.find({"userName":name}))
+@post("/user/create")
+def creatUser():
+    n=max(coll.distinct("idUser"))+1
+    names=(coll.distinct("userName"))
+    name=request.forms.get("userName")
+    if name in names:
+        return "Name alreasy exists"
+    else:
+        info={"userName":name,
+            "idUser":n}
+        coll.insert_one(info)
+        return f"User_id: {n}"
+
+
+
 
 
 '''
@@ -44,7 +53,25 @@ def add():
     chiste=request.forms.get("chiste")  
     return {
         "inserted_doc": str(coll.addChiste(autor,chiste))}
+
+def newUser():
+    name = str(request.forms.get("name"))
+    new_id = max(coll.distinct("idUser")) + 1
+    new_user = {
+        "idUser": new_id,
+        "userName": name
+    }
+    collection.insert_one(new_user)
+
+@post('/add')
+def add():
+    print(dict(request.forms))
+    autor=request.forms.get("autor")
+    chiste=request.forms.get("chiste")  
+    return {
+        "inserted_doc": str(coll.addChiste(autor,chiste))}
 '''
 
 db, coll = mon.connectCollection('chats','chats')
+mon.add_json(1,coll)
 run(host='0.0.0.0', port=8080)

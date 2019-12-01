@@ -18,7 +18,10 @@ def connectCollection(database, collection):
     coll = db[collection]
     return db, coll
 
-with open('./input/chats.json') as f:
-    chats_json = json.load(f)
-#coll.remove({})
-#coll.insert_many(chats_json)
+#url='./input/chats.json'
+def add_json(rem,coll):
+    with open('./input/chats.json') as f:
+        chats_json = json.load(f)
+    if rem:    
+        coll.remove({})
+    coll.insert_many(chats_json)

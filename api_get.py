@@ -1,6 +1,7 @@
 from bottle import route, run, get, post, request
 import random
-from mongoAtlasConnection import coll, db, coll_sent, db_sent
+from mongoAtlasConnection import coll, db
+from mongoAtlasConnection import coll_sent, db_sent
 import bson
 from bson.json_util import dumps
 import api_post

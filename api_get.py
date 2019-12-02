@@ -40,6 +40,7 @@ def oneChat(chat_id):
 
 @get("/chat/<chat_id>/sentiment")
 def chatSentiment(chat_id):
+    '''devuelve una lista de diccionarios con los nombres, mensajes y sentimientos del chat seleccionado'''
     texts = oneChat(chat_id)
     sid = SentimentIntensityAnalyzer()
     sentiments = []

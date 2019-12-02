@@ -30,6 +30,6 @@ def add_json(rem, coll, url):
 
 db, coll = connectCollection('chat_conversations', 'chat_conversations')
 db_sent, coll_sent = connectCollection('chat_conversations', 'sentiments')
-coll_sent.remove({})
+# coll_sent.remove({})
 #url = './input/chats.json'
 #add_json(1, coll, url)

@@ -19,8 +19,8 @@ def connectCollection(database, collection):
     return db, coll
 
 #url='./input/chats.json'
-def add_json(rem,coll):
-    with open('./input/chats.json') as f:
+def add_json(rem,coll,url):
+    with open(url) as f:
         chats_json = json.load(f)
     if rem:    
         coll.remove({})

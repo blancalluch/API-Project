@@ -9,8 +9,5 @@ WORKDIR /app
 # Install the requirements 
 RUN pip3 install -r requirements.txt 
 
-RUN adduser -D myuser
-USER myuser
-
 # Command to run when starting the container
 CMD ["python3","-u","api_get.py"]

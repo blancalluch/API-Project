@@ -7,8 +7,8 @@ import datetime
 
 
 db, coll = mon.connectCollection('chat_conversations','chat_conversations')
-url='./input/chats.json'
-mon.add_json(1,coll,url)
+#url='./input/chats.json'
+#mon.add_json(1,coll,url)
 @get("/")
 def index():
     return dumps(coll.find())
@@ -79,38 +79,33 @@ def addUsertoChat(chat_id):
     else:
         return res
 
-
-
-
-
-
-
 @post("/chat/<chat_id>/addmessage")
 def addMessagetoChat(chat_id):
-    res="ok"
     user=request.forms.get("user_id")
     chat=request.forms.get("chat_id")
     text=request.forms.get("text")
-    print(user)
+    print(user,chat,text)
     user_info=list(coll.find({"idUser":int(user)},{"userName":1,"idChat":1,"_id":0}))
     print(user_info)
     message_id=max(coll.distinct("idMessage"))+1
-    for u in user_info:
-        if u["idChat"]==int(chat_id):
-            res= f"User {user} already in chat {chat_id}"
-    if res=="ok":   
-        info={
-            "idUser":int(user),
-            "userName":user_info[0]["userName"],
-            "idChat": int(chat),
-            "idMessage":message_id,
-            "datetime": datetime.datetime.utcnow(),
-            "text": text
-            }
-        coll.insert_one(info)
-        return f"Chat_id: {chat_id}"
-    else:
-        return res
+    print(message_id)
+    print(user_info[0]["userName"])
+    try:
+        for u in user_info:
+            if u["idChat"]==int(chat_id): 
+                info={
+                    "idUser":int(user),
+                    "userName":user_info[0]["userName"],
+                    "idChat": int(chat_id),
+                    "idMessage":int(message_id),
+                    "datetime": datetime.datetime.utcnow(),
+                    "text": text
+                    }
+                print(info)
+                coll.insert_one(info)
+                return f"Message_id: {message_id}"
+    except:
+        print(f"User {user} isn't part of chat {chat_id}.")
 
 
 

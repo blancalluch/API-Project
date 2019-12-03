@@ -52,10 +52,10 @@ def chatSentiment(chat_id):
         info_m["Message"] = d[2]
         info_m["Sentiment"] = sid.polarity_scores(d[2])
         sentiments.append(info_m)
-    coll_sent.insert_many(sentiments)
+    if coll_sent.find({"idChat": int(chat_id)}) == []:
+        coll_sent.insert_many(sentiments)
     comp_sent = [s['Sentiment']['compound'] for s in sentiments]
     avg = reduce((lambda x, y: x+y), comp_sent)/len(comp_sent)
-    print(sentiments)
     return dumps({"sentiments": sentiments,
                   "compound sentiments": comp_sent,
                   "avg sentiment [-1,1]": avg})

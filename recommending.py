@@ -48,4 +48,6 @@ def recommendingUsers(user_id):
     sim_df = pd.DataFrame(
         similarity_matrix, columns=user_message["user_message"].keys(), index=user_message["user_message"].keys())
     np.fill_diagonal(sim_df.values, 0)
-    return dumps(zip(list(sim_df[user_id].sort_values(ascending=False)[:3].index), list(sim_df[user_id].sort_values(ascending=False)[:3])))
+
+    return dumps(zip(list(sim_df[user_id].sort_values(ascending=False)[:3].index),
+                     list(sim_df[user_id].sort_values(ascending=False)[:3])))

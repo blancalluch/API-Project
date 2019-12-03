@@ -2,6 +2,8 @@ from mongoAtlasConnection import coll, db
 from bottle import route, run, get, post, request
 import datetime
 from bottle import response
+import bson
+from bson.json_util import dumps
 
 
 @post("/user/create")
@@ -79,9 +81,9 @@ def addMessagetoChat(chat_id):
             "text": text
         }
         coll.insert_one(info)
-        return {"Message_id": message_id}
+        return dumps({"Message_id": message_id})
     else:
         response.status = 500
-        return {
+        return dumps({
             "error": "User does not exist in this chat"
-        }
+        })

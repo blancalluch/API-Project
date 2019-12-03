@@ -8,6 +8,7 @@ import api_post
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from functools import reduce
+import recommending
 
 
 @get("/")

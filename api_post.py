@@ -68,13 +68,12 @@ def addMessagetoChat(chat_id):
     user = int(request.forms.get("user_id"))
     text = request.forms.get("text")
     user_info = coll.find_one({"idUser": user, "idChat": chat_id}, {
-                              "userName": 1, "idChat": 1, "_id": 0})
+        "userName": 1, "idChat": 1, "_id": 0})
     message_id = max(coll.distinct("idMessage"))+1
-
     if user_info and user_info["idChat"] == chat_id:
         info = {
             "idUser": user,
-            "userName": user_info[0]["userName"],
+            "userName": user_info["userName"],
             "idChat": chat_id,
             "idMessage": int(message_id),
             "datetime": datetime.datetime.utcnow(),

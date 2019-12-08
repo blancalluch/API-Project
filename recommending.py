@@ -10,6 +10,8 @@ import numpy as np
 import bson
 from bson.json_util import dumps
 from bottle import route, run, get, post, request
+from mongoAtlasConnection import coll, db
+#from api_get import chatSentiment
 
 
 def CollectionInfo():
@@ -27,17 +29,14 @@ def CollectionInfo():
 
 @get("/user/<user_id>/recommend")
 def recommendingUsers(user_id):
-    '''devuelve una lista con los 3 usuarios que mas se parecen a el usuario insertado'''
+    '''devuelve una lista con los 3 usuarios que más se parecen all usuario insertado'''
     user_message = CollectionInfo()
-    print("hola1")
     if int(user_id) not in user_message["userId's"]:
         return f"{user_id}'s' sentiments aren't analyzed."
     else:
-        print("hola2")
         nltk.download('stopwords')
         stop_words = set(stopwords.words('english'))
         i = 0
-        print("hola3")
         for m in user_message["user_message"].values():
             tokenizer = RegexpTokenizer(r"\w+")
             tokens = tokenizer.tokenize(m)

@@ -20,14 +20,14 @@ def index():
 @get("/usernames")
 def usernames():
     '''devuelve los usernames de la api'''
-    return dumps(coll.find({}, {"userName": 1, "_id": 0}))
+    return dumps(coll.distinct("userName"))
 
 
 @get("/chats")
 def chats():
     '''devuelve los chats de la api'''
     print(f"Chat")
-    return dumps(coll.find({}, {"idChat": 1, "_id": 0}))
+    return dumps(coll.distinct("idChat"))
 
 
 @get("/chat/<chat_id>/list")

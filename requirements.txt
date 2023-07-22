@@ -1,5 +1,5 @@
 bottle==0.12.17
-nltk==3.4.5
+nltk==3.6.6
 pymongo==3.9.0
 python-dotenv==0.10.3
 requests==2.22.0
